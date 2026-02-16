@@ -56,45 +56,6 @@ public class InventoryController {
     }
 
     /**
-     * Get all inventory items.
-     */
-    @GetMapping(value = {"", "/", "/all"})
-    public ResponseEntity<?> getAllInventory() {
-        _logger.info("Getting all inventory");
-        return ResponseEntity.ok(repository.findAll());
-    }
-
-    /**
-     * Get inventory by ID.
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getInventoryById(@PathVariable String id) {
-        if (id == null || id.isBlank()) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Inventory id is required"));
-        }
-        return repository.findById(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("error", "Inventory not found for id: " + id)));
-    }
-
-    /**
-     * Get inventory by skuCode.
-     */
-    @GetMapping("/sku/{skuCode}")
-    public ResponseEntity<?> getInventoryBySkuCode(@PathVariable String skuCode) {
-        if (skuCode == null || skuCode.isBlank()) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "skuCode is required"));
-        }
-        return repository.findBySkuCode(skuCode)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("error", "Inventory not found for skuCode: " + skuCode)));
-    }
-
-    /**
      * Add or update inventory item.
      */
     @PostMapping(value = {"", "/"})
