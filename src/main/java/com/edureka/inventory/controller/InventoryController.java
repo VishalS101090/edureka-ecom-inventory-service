@@ -27,6 +27,16 @@ public class InventoryController {
     private InventoryRepository repository;
 
     /**
+     * Get all inventory items.
+     * Returns 200 OK with list of all inventory items (empty list if none).
+     */
+    @GetMapping(value = {"", "/", "/all"})
+    public ResponseEntity<?> getAllInventory() {
+        _logger.info("Getting all inventory items");
+        return ResponseEntity.ok(repository.findAll());
+    }
+
+    /**
      * Check if sufficient stock is available for a given skuCode and quantity.
      * Used by Order service for inter-service communication.
      * Returns 200 with { "inStock": true/false } or 404 if product not in inventory.
