@@ -15,7 +15,7 @@ spec:
       containers:
         - name: inventory-service
           image: vishal101090/inventory-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "5005"
